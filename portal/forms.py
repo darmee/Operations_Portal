@@ -35,7 +35,7 @@ class TaskForm(forms.ModelForm):
         self.user = user
         self.fields['team'].required = True
         self.fields['team'].empty_label = 'Choose a team…'
-        self.fields['assignee'].queryset = User.objects.filter(is_active=True).order_by(
+        self.fields['assignee'].queryset = User.objects.filter(is_active=True, is_superuser=False).order_by(
             'first_name', 'username',
         )
 

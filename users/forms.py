@@ -121,12 +121,12 @@ class TeamForm(forms.ModelForm):
 
         # limit_choices_to on the model already restricts the lead dropdown to
         # active leadership accounts. Order it so it is usable.
-        self.fields['lead'].queryset = self.fields['lead'].queryset.order_by(
+        self.fields['lead'].queryset = self.fields['lead'].queryset.filter(is_active=True, is_superuser=False).order_by(
             'first_name', 'username',
         )
         self.fields['lead'].empty_label = 'Choose a lead…'
 
-        self.fields['members'].queryset = User.objects.filter(is_active=True).order_by(
+        self.fields['members'].queryset = User.objects.filter(is_active=True, is_superuser=False).order_by(
             'first_name', 'username',
         )
         if self.instance.pk:
